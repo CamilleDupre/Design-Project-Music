@@ -34,6 +34,7 @@ public class play : MonoBehaviour
     private float time = 0.0f;
     public float interpolationPeriod = 0.1f;
     string playedNote = "";
+    float speed = 7f;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +56,7 @@ public class play : MonoBehaviour
         moveMusicSheet();
         cheekNotes();
         playedNotePiano();
+        speed =  GameObject.Find("Data").GetComponent<DataScript>().speed;
     }
 
     void moveMusicSheet()
@@ -71,7 +73,7 @@ public class play : MonoBehaviour
             {
 
                 Vector3 pos = Notes[i].position;
-                pos.x -= 7f;
+                pos.x -= speed;
                 Notes[i].transform.position = pos;
 
                 if (Notes[i].position.x < 192)

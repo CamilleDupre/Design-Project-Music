@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Instrument Recognition.unity
     guid: 593176ff653f4cb4a89d1a3ccb313fd4
+  - enabled: 1
+    path: Assets/Scenes/Play.unity
+    guid: d60bd8def8133d14cad4b3478587fa3f
+  - enabled: 1
+    path: Assets/Scenes/Practice.unity
+    guid: 7b7473bf02f324d4ebd569c8fef60e4c
   m_configObjects: {}
