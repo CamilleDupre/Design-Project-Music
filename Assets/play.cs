@@ -28,13 +28,15 @@ public class play : MonoBehaviour
 
     List<Transform> Notes = new List<Transform>();
     List<string> NotesNames = new List<string>();
-
+    List<PressButton> keyboard = new List<PressButton>();
     public Transform line;
+    public Transform line2;
 
     private float time = 0.0f;
     public float interpolationPeriod = 0.1f;
     string playedNote = "";
     float speed = 7f;
+    bool playNote = false; 
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +51,15 @@ public class play : MonoBehaviour
         Notes.Add(re3); NotesNames.Add("Re");
         Notes.Add(re4); NotesNames.Add("Re");
         Notes.Add(do5); NotesNames.Add("Do");
+
+        keyboard.Add(Dokey);
+        keyboard.Add(Rekey);
+        keyboard.Add(Mikey);
+        keyboard.Add(Fakey);
+        keyboard.Add(Solkey);
+        keyboard.Add(Lakey);
+        keyboard.Add(Sikey);
+
     }
 
     void Update()
@@ -57,7 +68,27 @@ public class play : MonoBehaviour
         cheekNotes();
         playedNotePiano();
         speed =  GameObject.Find("Data").GetComponent<DataScript>().speed;
+        pressKeys();
     }
+
+    public void pressKeys()
+    {
+        for (int i = 0; i < keyboard.Count; i++)
+        {
+            if (keyboard[i].PublicIsPressed())
+            {
+                if (!playNote)
+                {
+                    AudioSource audioSource = keyboard[i].GetComponent<AudioSource>();
+                    audioSource.Play();
+                    playNote = true;
+                }
+            }
+
+        }
+    }
+
+    
 
     void moveMusicSheet()
     {
@@ -76,7 +107,7 @@ public class play : MonoBehaviour
                 pos.x -= speed;
                 Notes[i].transform.position = pos;
 
-                if (Notes[i].position.x < 192)
+                if (Notes[i].position.x < line.position.x)
                 {
                     Notes[i].gameObject.SetActive(false);
                     Notes.RemoveAt(i);
@@ -104,7 +135,7 @@ public class play : MonoBehaviour
     {
 
         if (Notes.Count > 0) {
-            if (Notes[0].position.x > 192 && Notes[0].position.x < 215)
+            if (Notes[0].position.x > line.position.x && Notes[0].position.x < line2.position.x)
             {
                 //Debug.Log("Click");
                 if(NotesNames[0] == playedNote)
@@ -160,6 +191,7 @@ public class play : MonoBehaviour
         else
         {
             playedNote = "";
+            playNote = false;
         }
     }
 }

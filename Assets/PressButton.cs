@@ -9,5 +9,9 @@ public class PressButton : Button
         {
             return base.IsPressed();
         }
- }
+
+    void Update()
+    {
+    }
+}
     

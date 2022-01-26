@@ -13,6 +13,8 @@ public class Piano : MonoBehaviour
     public PressButton Lakey;
     public PressButton Sikey;
 
+    List<PressButton> keyboard = new List<PressButton>();
+
     public Button donote ;
     public Button re ;
     public Button mi ;
@@ -21,10 +23,30 @@ public class Piano : MonoBehaviour
     public Button la ;
     public Button si ;
 
+    List<Button> Notes = new List<Button>();
+
     public Text text;
+
+    bool play = false;
+
+    public AudioClip Do;
+
+    void Start()
+    {
+        Notes.Add(donote); keyboard.Add(Dokey);
+        Notes.Add(re);     keyboard.Add(Rekey);
+        Notes.Add(mi);     keyboard.Add(Mikey);
+        Notes.Add(fa);     keyboard.Add(Fakey);
+        Notes.Add(sol);    keyboard.Add(Solkey);
+        Notes.Add(la);     keyboard.Add(Lakey);
+        Notes.Add(si);     keyboard.Add(Sikey);
+       
+    }
 
     void Update()
     {
+        pressKeys();
+       // releaseKeys();
         /*
         donote.GetComponent<Image>().color = Color.black;
         re.GetComponent<Image>().color = Color.black;
@@ -34,11 +56,19 @@ public class Piano : MonoBehaviour
         la.GetComponent<Image>().color = Color.black;
         si.GetComponent<Image>().color = Color.black;
         */
-        
+        /*
         if (Dokey.PublicIsPressed())
         {
             donote.GetComponent<Image>().color = Color.green;
             text.text = "Note : DO";
+
+            if (!play)
+            {
+                AudioSource audioSource = Dokey.GetComponent<AudioSource>();
+                //audioSource.PlayOneShot(Do, 0.7F);
+                audioSource.Play();
+                play = true;
+            }
         }
 
        else if (Rekey.PublicIsPressed())
@@ -79,8 +109,29 @@ public class Piano : MonoBehaviour
         else
         {
             text.text = "Note :";
-        }
+        }*/
 
+    }
+
+    public void pressKeys()
+    {
+        for (int i = 0; i < keyboard.Count; i++)
+        {
+            if (keyboard[i].PublicIsPressed())
+            {
+                Notes[i].GetComponent<Image>().color = Color.green;
+                text.text = "Note : " + keyboard[i].name;
+
+                if (!play)
+                {
+                    AudioSource audioSource = keyboard[i].GetComponent<AudioSource>();
+                    //audioSource.PlayOneShot(Do, 0.7F);
+                    audioSource.Play();
+                    play = true;
+                }
+            }
+
+        }
     }
 
 
@@ -88,36 +139,43 @@ public class Piano : MonoBehaviour
     {
         Debug.Log("Do");
         donote.GetComponent<Image>().color = Color.black;
+        play = false;
     }
     public void PressRe()
     {
         Debug.Log("Re");
         re.GetComponent<Image>().color = Color.black;
+        play = false;
     }
     public void PressMi()
     {
         Debug.Log("Mi");
         mi.GetComponent<Image>().color = Color.black;
+        play = false;
     }
     public void PressFa()
     {
         Debug.Log("Fa");
         fa.GetComponent<Image>().color = Color.black;
+        play = false;
     }
     public void PressSol()
     {
         Debug.Log("Sol");
         sol.GetComponent<Image>().color = Color.black;
+        play = false;
     }
     public void PressLa()
     {
         Debug.Log("La");
         la.GetComponent<Image>().color = Color.black;
+        play = false;
     }
     public void PressSi()
     {
         Debug.Log("Si");
         si.GetComponent<Image>().color = Color.black;
+        play = false;
     }
     public void PressB1()
     {
