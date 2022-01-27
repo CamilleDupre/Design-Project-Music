@@ -25,6 +25,7 @@ public class play : MonoBehaviour
     public PressButton Solkey;
     public PressButton Lakey;
     public PressButton Sikey;
+    public PressButton Dokey2;
 
     List<Transform> Notes = new List<Transform>();
     List<string> NotesNames = new List<string>();
@@ -36,7 +37,12 @@ public class play : MonoBehaviour
     public float interpolationPeriod = 0.1f;
     string playedNote = "";
     float speed = 7f;
-    bool playNote = false; 
+    bool playNote = false;
+
+
+    int nbErrors = 0;
+    int nbGoodNotes = 0;
+    int nbMissNotes = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +65,7 @@ public class play : MonoBehaviour
         keyboard.Add(Solkey);
         keyboard.Add(Lakey);
         keyboard.Add(Sikey);
+        keyboard.Add(Dokey2);
 
     }
 
@@ -100,6 +107,32 @@ public class play : MonoBehaviour
             time = time - interpolationPeriod;
             // execute block of code here
 
+
+            if (Notes.Count != 0 && Notes[0].position.x < line.position.x)
+            {
+                if (Notes[0].GetComponent<Image>().color == Color.red)
+                {
+                    nbErrors++;
+                }
+
+                else if (Notes[0].GetComponent<Image>().color == Color.green)
+                {
+                    nbGoodNotes++;
+                }
+
+                else if (Notes[0].GetComponent<Image>().color == Color.black)
+                {
+                    nbMissNotes++;
+                }
+                Notes[0].gameObject.SetActive(false);
+                Notes.RemoveAt(0);
+                NotesNames.RemoveAt(0);
+
+                Debug.Log("nbErrors " + nbErrors + " nbGoodNotes " + nbGoodNotes + " nbMissNotes " + nbMissNotes);
+
+            }
+
+
             for (int i = 0; i < Notes.Count; i++)
             {
 
@@ -107,15 +140,7 @@ public class play : MonoBehaviour
                 pos.x -= speed;
                 Notes[i].transform.position = pos;
 
-                if (Notes[i].position.x < line.position.x)
-                {
-                    Notes[i].gameObject.SetActive(false);
-                    Notes.RemoveAt(i);
-                    NotesNames.RemoveAt(i);
-                    i--;
-
-                }
-                else if (Notes[i].position.x > 593)
+                if (Notes[i].position.x > 593)
                 {
                     Notes[i].gameObject.SetActive(false);
                 }
@@ -187,6 +212,11 @@ public class play : MonoBehaviour
         else if (Sikey.PublicIsPressed())
         {
             playedNote = "Si";
+        }
+
+        else if (Dokey2.PublicIsPressed())
+        {
+            playedNote = "Do2";
         }
         else
         {

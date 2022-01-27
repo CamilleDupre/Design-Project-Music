@@ -12,6 +12,13 @@ public class Piano : MonoBehaviour
     public PressButton Solkey;
     public PressButton Lakey;
     public PressButton Sikey;
+    public PressButton Dokey2;
+
+    public PressButton Dodkey;
+    public PressButton Redkey;
+    public PressButton Fadkey;
+    public PressButton Solskey;
+    public PressButton Ladkey;
 
     List<PressButton> keyboard = new List<PressButton>();
 
@@ -22,6 +29,7 @@ public class Piano : MonoBehaviour
     public Button sol ;
     public Button la ;
     public Button si ;
+    public Button donote2;
 
     List<Button> Notes = new List<Button>();
 
@@ -40,87 +48,36 @@ public class Piano : MonoBehaviour
         Notes.Add(sol);    keyboard.Add(Solkey);
         Notes.Add(la);     keyboard.Add(Lakey);
         Notes.Add(si);     keyboard.Add(Sikey);
-       
+        Notes.Add(donote2); keyboard.Add(Dokey2);
+
+        Notes.Add(donote); keyboard.Add(Dodkey);
+        Notes.Add(re); keyboard.Add(Redkey);
+        Notes.Add(fa); keyboard.Add(Fadkey);
+        Notes.Add(sol); keyboard.Add(Solskey);
+        Notes.Add(la); keyboard.Add(Ladkey);
+
     }
 
     void Update()
     {
         pressKeys();
-       // releaseKeys();
-        /*
-        donote.GetComponent<Image>().color = Color.black;
-        re.GetComponent<Image>().color = Color.black;
-        mi.GetComponent<Image>().color = Color.black;
-        fa.GetComponent<Image>().color = Color.black;
-        sol.GetComponent<Image>().color = Color.black;
-        la.GetComponent<Image>().color = Color.black;
-        si.GetComponent<Image>().color = Color.black;
-        */
-        /*
-        if (Dokey.PublicIsPressed())
-        {
-            donote.GetComponent<Image>().color = Color.green;
-            text.text = "Note : DO";
-
-            if (!play)
-            {
-                AudioSource audioSource = Dokey.GetComponent<AudioSource>();
-                //audioSource.PlayOneShot(Do, 0.7F);
-                audioSource.Play();
-                play = true;
-            }
-        }
-
-       else if (Rekey.PublicIsPressed())
-        {
-            re.GetComponent<Image>().color = Color.green;
-            text.text = "Note : RE";
-        }
-
-        else if (Mikey.PublicIsPressed())
-        {
-            mi.GetComponent<Image>().color = Color.green;
-            text.text = "Note : MI";
-        }
-
-        else if (Fakey.PublicIsPressed())
-        {
-            fa.GetComponent<Image>().color = Color.green;
-            text.text = "Note : FA";
-        }
-
-        else if (Solkey.PublicIsPressed())
-        {
-            sol.GetComponent<Image>().color = Color.green;
-            text.text = "Note : SOL";
-        }
-
-       else  if (Lakey.PublicIsPressed())
-        {
-            la.GetComponent<Image>().color = Color.green;
-            text.text = "Note : LA";
-        }
-
-       else if (Sikey.PublicIsPressed())
-        {
-            si.GetComponent<Image>().color = Color.green;
-            text.text = "Note : SI";
-        }
-        else
-        {
-            text.text = "Note :";
-        }*/
-
     }
 
     public void pressKeys()
     {
+        bool nothingPress = true;
         for (int i = 0; i < keyboard.Count; i++)
         {
             if (keyboard[i].PublicIsPressed())
             {
+                nothingPress = false;
                 Notes[i].GetComponent<Image>().color = Color.green;
                 text.text = "Note : " + keyboard[i].name;
+
+                if (i > 7)
+                {
+                    Notes[i].transform.GetChild(0).gameObject.SetActive(true);   
+                }
 
                 if (!play)
                 {
@@ -132,69 +89,20 @@ public class Piano : MonoBehaviour
             }
 
         }
+        if (nothingPress)
+        {
+            for (int i = 0; i < keyboard.Count; i++)
+            {
+                Notes[i].GetComponent<Image>().color = Color.black;
+                play = false;
+                if (i > 7)
+                {
+                    Notes[i].transform.GetChild(0).gameObject.SetActive(false);
+                }
+            }
+
+            
+        }
     }
 
-
-    public void PressDo()
-    {
-        Debug.Log("Do");
-        donote.GetComponent<Image>().color = Color.black;
-        play = false;
-    }
-    public void PressRe()
-    {
-        Debug.Log("Re");
-        re.GetComponent<Image>().color = Color.black;
-        play = false;
-    }
-    public void PressMi()
-    {
-        Debug.Log("Mi");
-        mi.GetComponent<Image>().color = Color.black;
-        play = false;
-    }
-    public void PressFa()
-    {
-        Debug.Log("Fa");
-        fa.GetComponent<Image>().color = Color.black;
-        play = false;
-    }
-    public void PressSol()
-    {
-        Debug.Log("Sol");
-        sol.GetComponent<Image>().color = Color.black;
-        play = false;
-    }
-    public void PressLa()
-    {
-        Debug.Log("La");
-        la.GetComponent<Image>().color = Color.black;
-        play = false;
-    }
-    public void PressSi()
-    {
-        Debug.Log("Si");
-        si.GetComponent<Image>().color = Color.black;
-        play = false;
-    }
-    public void PressB1()
-    {
-        Debug.Log("B1");
-    }
-    public void PressB2()
-    {
-        Debug.Log("B2");
-    }
-    public void PressB3()
-    {
-        Debug.Log("B3");
-    }
-    public void PressB4()
-    {
-        Debug.Log("B4");
-    }
-    public void PressB5()
-    {
-        Debug.Log("B5");
-    }
 }
