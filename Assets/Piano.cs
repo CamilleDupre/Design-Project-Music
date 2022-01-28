@@ -42,12 +42,12 @@ public class Piano : MonoBehaviour
     void Start()
     {
         Notes.Add(donote); keyboard.Add(Dokey);
-        Notes.Add(re);     keyboard.Add(Rekey);
-        Notes.Add(mi);     keyboard.Add(Mikey);
-        Notes.Add(fa);     keyboard.Add(Fakey);
-        Notes.Add(sol);    keyboard.Add(Solkey);
-        Notes.Add(la);     keyboard.Add(Lakey);
-        Notes.Add(si);     keyboard.Add(Sikey);
+        Notes.Add(re); keyboard.Add(Rekey);
+        Notes.Add(mi); keyboard.Add(Mikey);
+        Notes.Add(fa); keyboard.Add(Fakey);
+        Notes.Add(sol); keyboard.Add(Solkey);
+        Notes.Add(la); keyboard.Add(Lakey);
+        Notes.Add(si); keyboard.Add(Sikey);
         Notes.Add(donote2); keyboard.Add(Dokey2);
 
         Notes.Add(donote); keyboard.Add(Dodkey);
@@ -56,11 +56,17 @@ public class Piano : MonoBehaviour
         Notes.Add(sol); keyboard.Add(Solskey);
         Notes.Add(la); keyboard.Add(Ladkey);
 
+        float volume = GameObject.Find("Data").GetComponent<DataScript>().volume;
+        for (int i = 0; i < keyboard.Count; i++)
+        {
+            keyboard[i].GetComponent<AudioSource>().volume = volume;
+        }
     }
 
     void Update()
     {
         pressKeys();
+       
     }
 
     public void pressKeys()

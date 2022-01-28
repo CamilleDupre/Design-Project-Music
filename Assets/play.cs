@@ -43,6 +43,9 @@ public class play : MonoBehaviour
     int nbErrors = 0;
     int nbGoodNotes = 0;
     int nbMissNotes = 0;
+
+
+   // public Transform score as RectTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +70,14 @@ public class play : MonoBehaviour
         keyboard.Add(Sikey);
         keyboard.Add(Dokey2);
 
+        float volume = GameObject.Find("Data").GetComponent<DataScript>().volume;
+        for (int i = 0; i < keyboard.Count; i++)
+        {
+            keyboard[i].GetComponent<AudioSource>().volume = volume;
+        }
+
+        speed = GameObject.Find("Data").GetComponent<DataScript>().speed;
+
     }
 
     void Update()
@@ -74,7 +85,6 @@ public class play : MonoBehaviour
         moveMusicSheet();
         cheekNotes();
         playedNotePiano();
-        speed =  GameObject.Find("Data").GetComponent<DataScript>().speed;
         pressKeys();
     }
 
@@ -118,6 +128,9 @@ public class play : MonoBehaviour
                 else if (Notes[0].GetComponent<Image>().color == Color.green)
                 {
                     nbGoodNotes++;
+                    // score.gameObject.Width += 10;
+                   // score.rect.width = 60f;
+
                 }
 
                 else if (Notes[0].GetComponent<Image>().color == Color.black)
