@@ -132,7 +132,17 @@ public class play : MonoBehaviour
             if ( keyboard2[i])
             {
 
-                keyboard[i].GetComponent<Image>().color = Color.green;
+                if (NotesNames[0] == playedNote)
+                {
+                    keyboard[i].GetComponent<Image>().color = Color.green;
+                }
+                else
+                {
+                    keyboard[i].GetComponent<Image>().color = Color.red;
+                    // green for the good one 
+
+                }
+              
                 if (!playNote)
                 {
                     AudioSource audioSource = keyboard[i].GetComponent<AudioSource>();
