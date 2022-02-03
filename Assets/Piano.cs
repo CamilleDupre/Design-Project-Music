@@ -31,7 +31,10 @@ public class Piano : MonoBehaviour
     public Button si ;
     public Button donote2;
 
+    string playedNote = "";
+
     List<Button> Notes = new List<Button>();
+    List<bool> keyboard2 = new List<bool>();
 
     public Text text;
 
@@ -56,6 +59,20 @@ public class Piano : MonoBehaviour
         Notes.Add(sol); keyboard.Add(Solskey);
         Notes.Add(la); keyboard.Add(Ladkey);
 
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+        keyboard2.Add(false);
+
         float volume = GameObject.Find("Data").GetComponent<DataScript>().volume;
         for (int i = 0; i < keyboard.Count; i++)
         {
@@ -66,7 +83,8 @@ public class Piano : MonoBehaviour
     void Update()
     {
         pressKeys();
-       
+        playedNotePiano();
+
     }
 
     public void pressKeys()
@@ -74,7 +92,7 @@ public class Piano : MonoBehaviour
         bool nothingPress = true;
         for (int i = 0; i < keyboard.Count; i++)
         {
-            if (keyboard[i].PublicIsPressed())
+            if (keyboard2[i])
             {
                 nothingPress = false;
                 Notes[i].GetComponent<Image>().color = Color.green;
@@ -111,4 +129,90 @@ public class Piano : MonoBehaviour
         }
     }
 
-}
+    void playedNotePiano()
+    {
+        if (Dokey.PublicIsPressed() || (Input.GetKey("d")))
+        {
+            playedNote = "Do";
+            keyboard2[0] = true;
+
+        }
+
+        else if (Rekey.PublicIsPressed() || (Input.GetKey("f")))
+        {
+            playedNote = "Re";
+            keyboard2[1] = true;
+        }
+
+        else if (Mikey.PublicIsPressed() || (Input.GetKey("g")))
+        {
+            playedNote = "Mi";
+            keyboard2[2] = true;
+        }
+
+        else if (Fakey.PublicIsPressed() || (Input.GetKey("h")))
+        {
+            playedNote = "Fa";
+            keyboard2[3] = true;
+        }
+
+        else if (Solkey.PublicIsPressed() || (Input.GetKey("j")))
+        {
+            playedNote = "Sol";
+            keyboard2[4] = true;
+        }
+
+        else if (Lakey.PublicIsPressed() || (Input.GetKey("k")))
+        {
+            playedNote = "La";
+            keyboard2[5] = true;
+        }
+
+        else if (Sikey.PublicIsPressed() || (Input.GetKey("l")))
+        {
+            playedNote = "Si";
+            keyboard2[6] = true;
+        }
+
+        else if (Dokey2.PublicIsPressed() || (Input.GetKey("m")))
+        {
+            playedNote = "Do2";
+            keyboard2[7] = true;
+        }
+        else if (Dokey2.PublicIsPressed() || (Input.GetKey("r")))
+        {
+            playedNote = "Do#";
+            keyboard2[8] = true;
+        }
+        else if (Dokey2.PublicIsPressed() || (Input.GetKey("t")))
+        {
+            playedNote = "Re#";
+            keyboard2[9] = true;
+        }
+        else if (Dokey2.PublicIsPressed() || (Input.GetKey("i")))
+        {
+            playedNote = "Fa#";
+            keyboard2[10] = true;
+        }
+        else if (Dokey2.PublicIsPressed() || (Input.GetKey("o")))
+        {
+            playedNote = "Sol#";
+            keyboard2[11] = true;
+        }
+        else if (Dokey2.PublicIsPressed() || (Input.GetKey("p")))
+        {
+            playedNote = "La#";
+            keyboard2[12] = true;
+        }
+        else
+        {
+            playedNote = "";
+            play = false;
+            for (int i = 0; i < keyboard2.Count; i++)
+            {
+                keyboard2[i] = false;
+            }
+        }
+    }
+
+    }
