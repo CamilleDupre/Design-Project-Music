@@ -6,10 +6,13 @@ public class OSCrecived : MonoBehaviour
 {
 
     public OSC osc;
+    public float Note;
+    public float Veloc;
     // Start is called before the first frame update
     void Start()
     {
-        osc.SetAddressHandler("/note", OnReceiveXYZ);
+        osc.SetAddressHandler("/note", OnReceiveNote);
+        osc.SetAddressHandler("/veloc", OnReceiveVeloc);
     }
 
     // Update is called once per frame
@@ -17,9 +20,17 @@ public class OSCrecived : MonoBehaviour
     {
        // Debug.Log(osc.messagesReceived);
     }
-    void OnReceiveXYZ(OscMessage message)
+    void OnReceiveNote(OscMessage message)
     {
-        Debug.Log( message.GetFloat(0));
+        //Debug.Log( message.GetFloat(0));
+        Note = message.GetFloat(0);
+
+    }
+
+    void OnReceiveVeloc(OscMessage message)
+    {
+        //Debug.Log(message.GetFloat(0));
+        Veloc = message.GetFloat(0);
 
     }
 }
