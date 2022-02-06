@@ -20,15 +20,6 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         data = GameObject.Find("Data");
-        foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
-        {
-            if (Input.GetKey(vKey))
-            {
-                //your code here
-               // Debug.Log("vKey : " + vKey);
-
-            }
-        }
     }
 
     public void OnValueChanged(float newValue)

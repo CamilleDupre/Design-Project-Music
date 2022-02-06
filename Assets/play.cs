@@ -33,6 +33,8 @@ public class play : MonoBehaviour
     public PressButton Solskey;
     public PressButton Ladkey;
 
+    public Slider progress;
+
     List<Transform> Notes = new List<Transform>();
     List<string> NotesNames = new List<string>();
     List<PressButton> keyboard = new List<PressButton>();
@@ -66,7 +68,7 @@ public class play : MonoBehaviour
     public GameObject bad;
     public GameObject miss;
 
-
+    int nbNotesSong;
 
     // public Transform score as RectTransform;
     // Start is called before the first frame update
@@ -113,6 +115,8 @@ public class play : MonoBehaviour
         keyboard2.Add(false);
         keyboard2.Add(false);
 
+        nbNotesSong = Notes.Count;
+
         float volume = GameObject.Find("Data").GetComponent<DataScript>().volume;
         for (int i = 0; i < keyboard.Count; i++)
         {
@@ -140,6 +144,7 @@ public class play : MonoBehaviour
             piano.SetActive(false);
             musicsheet.SetActive(false);
             score.SetActive(true);
+            progress.gameObject.SetActive(false);
         }
     }
 
@@ -213,6 +218,7 @@ public class play : MonoBehaviour
                 Notes[0].gameObject.SetActive(false);
                 Notes.RemoveAt(0);
                 NotesNames.RemoveAt(0);
+                progress.value += 1f/ nbNotesSong;
 
                 //Debug.Log("nbErrors " + nbErrors + " nbGoodNotes " + nbGoodNotes + " nbMissNotes " + nbMissNotes);
 
