@@ -49,6 +49,7 @@ public class play : MonoBehaviour
     public float interpolationPeriod = 0.1f;
     string playedNote = "";
     float speed = 7f;
+    bool easy;
     bool playNote = false;
 
 
@@ -119,6 +120,7 @@ public class play : MonoBehaviour
         }
 
         speed = GameObject.Find("Data").GetComponent<DataScript>().speed;
+        easy = GameObject.Find("Data").GetComponent<DataScript>().easy;
 
     }
 
@@ -231,6 +233,11 @@ public class play : MonoBehaviour
                 else
                 {
                     Notes[i].gameObject.SetActive(true);
+                    if (easy)
+                    {
+                        Notes[i].transform.GetChild(0).gameObject.SetActive(true);
+                    }
+                   
 
                 }
 

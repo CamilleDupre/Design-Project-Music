@@ -7,6 +7,7 @@ public class DataScript : MonoBehaviour
 
     public float volume;
     public float speed;
+    public bool easy;
     bool alreadyCreated = false;
     // Start is called before the first frame update
 
@@ -44,10 +45,24 @@ public class DataScript : MonoBehaviour
     public void NormalSpeed()
     {
         speed = 7f;
+        easy = false;
+    }
+
+    public void HardSpeed()
+    {
+        speed = 14f;
+        easy = false;
     }
 
     public void SlowSpeed()
     {
         speed = 3f;
+        easy = false;
+    }
+
+    public void EasyMode()
+    {
+        easy = true;
+        speed = 7f;
     }
 }

@@ -46,6 +46,16 @@ public class MainMenu : MonoBehaviour
         data.GetComponent<DataScript>().SlowSpeed();
     }
 
+    public void EasyMode()
+    {
+        data.GetComponent<DataScript>().EasyMode();
+    }
+
+    public void HardSpeed()
+    {
+        data.GetComponent<DataScript>().HardSpeed();
+    }
+
     public void PlayGame()
     {
        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
