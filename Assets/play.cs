@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class play : MonoBehaviour
 {
@@ -68,6 +69,10 @@ public class play : MonoBehaviour
     public GameObject bad;
     public GameObject miss;
 
+    public GameObject FeedBack;
+    bool feedBackBool;
+    int feedBackCombo = 0;
+
     int nbNotesSong;
 
     // public Transform score as RectTransform;
@@ -130,6 +135,7 @@ public class play : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(feedBackCombo);
         if (Notes.Count != 0)
         {
             moveMusicSheet();
@@ -192,8 +198,6 @@ public class play : MonoBehaviour
         {
             time = time - interpolationPeriod;
             // execute block of code here
-
-
             if (Notes.Count != 0 && Notes[0].position.x < line.position.x)
             {
                 if (Notes[0].GetComponent<Image>().color == Color.red)
@@ -208,12 +212,21 @@ public class play : MonoBehaviour
                     // score.gameObject.Width += 10;
                     // score.rect.width = 60f;
                     good.GetComponent<TMPro.TextMeshProUGUI>().text = "Good : " + nbGoodNotes;
+                    feedBackCombo++;
                 }
 
                 else if (Notes[0].GetComponent<Image>().color == Color.black)
                 {
                     nbMissNotes++;
                     miss.GetComponent<TMPro.TextMeshProUGUI>().text = "Miss : " + nbMissNotes;
+                    FeedBack.GetComponent<TMPro.TextMeshProUGUI>().text = "Miss";
+                    if (!feedBackBool)
+                    {
+                        StartCoroutine(feedBack("Miss"));
+                        feedBackBool = true;
+                        feedBackCombo = 0;
+                    }
+                    
                 }
                 Notes[0].gameObject.SetActive(false);
                 Notes.RemoveAt(0);
@@ -221,13 +234,11 @@ public class play : MonoBehaviour
                 progress.value += 1f/ nbNotesSong;
 
                 //Debug.Log("nbErrors " + nbErrors + " nbGoodNotes " + nbGoodNotes + " nbMissNotes " + nbMissNotes);
-
             }
 
 
             for (int i = 0; i < Notes.Count; i++)
             {
-
                 Vector3 pos = Notes[i].position;
                 pos.x -= speed;
                 Notes[i].transform.position = pos;
@@ -243,13 +254,8 @@ public class play : MonoBehaviour
                     {
                         Notes[i].transform.GetChild(0).gameObject.SetActive(true);
                     }
-                   
-
                 }
-
             }
-
-
         }
     }
 
@@ -263,10 +269,28 @@ public class play : MonoBehaviour
                 if(NotesNames[0] == playedNote)
                 {
                     Notes[0].GetComponent<Image>().color = Color.green;
+                    if (!feedBackBool)
+                    {
+                        feedBackBool = true;
+                        if (feedBackCombo >= 3)
+                        {
+                          StartCoroutine(feedBack("Combo X" + feedBackCombo));
+                        }
+                        else
+                        {
+                          StartCoroutine(feedBack("Good"));
+                        }
+                    }
                 }
                 else if(playedNote != "")
                 {
                     Notes[0].GetComponent<Image>().color = Color.red;
+                    if (!feedBackBool)
+                    {
+                        StartCoroutine(feedBack("Wrong"));
+                        feedBackBool = true;
+                        feedBackCombo = 0;
+                    }
                 }
             }
         }
@@ -359,4 +383,19 @@ public class play : MonoBehaviour
             }
         }
     }
+
+   public void retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    IEnumerator feedBack(string fb)
+    {
+        FeedBack.GetComponent<TMPro.TextMeshProUGUI>().text = fb;
+        yield return new WaitForSeconds(0.5f);
+        FeedBack.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+        feedBackBool = false;
+
+    }
 }
+
