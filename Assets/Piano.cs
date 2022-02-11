@@ -101,6 +101,7 @@ public class Piano : MonoBehaviour
             {
                 nothingPress = false;
                 Notes[i].GetComponent<Image>().color = Color.green;
+                Notes[i].transform.Find("line").GetComponent<Image>().color = Color.green;
                 text.text = "Note : " + keyboard[i].name;
 
                 if (i > 7)
@@ -123,6 +124,7 @@ public class Piano : MonoBehaviour
             for (int i = 0; i < keyboard.Count; i++)
             {
                 Notes[i].GetComponent<Image>().color = Color.black;
+                Notes[i].transform.Find("line").GetComponent<Image>().color = Color.black;
                 play = false;
                 if (i > 7)
                 {
