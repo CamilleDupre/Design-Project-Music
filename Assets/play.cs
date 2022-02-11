@@ -40,8 +40,10 @@ public class play : MonoBehaviour
     List<string> NotesNames = new List<string>();
     List<PressButton> keyboard = new List<PressButton>();
     List<bool> keyboard2 = new List<bool>();
-    public Transform line;
-    public Transform line2;
+    public Transform lineLate;
+    public Transform lineGood1;
+    public Transform lineGood2;
+    public Transform lineEarly;
 
     public Transform lineBegin;
     public OSC osc;
@@ -59,6 +61,7 @@ public class play : MonoBehaviour
     int nbErrors = 0;
     int nbGoodNotes = 0;
     int nbMissNotes = 0;
+    int nbWrongTempo = 0;
 
     public GameObject musicsheet;
     public GameObject piano;
@@ -68,6 +71,9 @@ public class play : MonoBehaviour
     public GameObject good;
     public GameObject bad;
     public GameObject miss;
+    public GameObject WrongTempo;
+
+    public GameObject scoreNumber;
 
     public GameObject FeedBack;
     bool feedBackBool;
@@ -151,6 +157,13 @@ public class play : MonoBehaviour
             musicsheet.SetActive(false);
             score.SetActive(true);
             progress.gameObject.SetActive(false);
+            int s = nbGoodNotes * 100 + nbMissNotes * 0 + nbErrors * (-50) + nbWrongTempo * 50;
+            if (s <= 0)
+            {
+                s = 0;
+            }
+            scoreNumber.GetComponent<TMPro.TextMeshProUGUI>().text = "Score : " + s;
+            
         }
     }
 
@@ -198,7 +211,7 @@ public class play : MonoBehaviour
         {
             time = time - interpolationPeriod;
             // execute block of code here
-            if (Notes.Count != 0 && Notes[0].position.x < line.position.x)
+            if (Notes.Count != 0 && Notes[0].position.x < lineLate.position.x)
             {
                 if (Notes[0].GetComponent<Image>().color == Color.red)
                 {
@@ -209,10 +222,13 @@ public class play : MonoBehaviour
                 else if (Notes[0].GetComponent<Image>().color == Color.green)
                 {
                     nbGoodNotes++;
-                    // score.gameObject.Width += 10;
-                    // score.rect.width = 60f;
                     good.GetComponent<TMPro.TextMeshProUGUI>().text = "Good : " + nbGoodNotes;
                     feedBackCombo++;
+                }
+                else if (Notes[0].GetComponent<Image>().color == Color.yellow)
+                {
+                    nbWrongTempo++;
+                    WrongTempo.GetComponent<TMPro.TextMeshProUGUI>().text = "Wrong tempo : " + nbWrongTempo;
                 }
 
                 else if (Notes[0].GetComponent<Image>().color == Color.black)
@@ -263,7 +279,33 @@ public class play : MonoBehaviour
     {
 
         if (Notes.Count > 0) {
-            if (Notes[0].position.x > line.position.x && Notes[0].position.x < line2.position.x)
+
+            if (Notes[0].position.x > lineLate.position.x && Notes[0].position.x < lineGood2.position.x)
+            {
+                Debug.Log("Late");
+                if (NotesNames[0] == playedNote)
+                {
+                    Notes[0].GetComponent<Image>().color = Color.yellow;
+                    if (!feedBackBool)
+                    {
+                        feedBackBool = true;
+                        StartCoroutine(feedBack("Late"));
+                        feedBackCombo = 0;
+
+                    }
+                }
+                else if (playedNote != "")
+                {
+                    Notes[0].GetComponent<Image>().color = Color.red;
+                    if (!feedBackBool)
+                    {
+                        StartCoroutine(feedBack("Wrong"));
+                        feedBackBool = true;
+                        feedBackCombo = 0;
+                    }
+                }
+            }
+            if (Notes[0].position.x > lineGood2.position.x && Notes[0].position.x < lineGood1.position.x)
             {
                 //Debug.Log("Click");
                 if(NotesNames[0] == playedNote)
@@ -283,6 +325,32 @@ public class play : MonoBehaviour
                     }
                 }
                 else if(playedNote != "")
+                {
+                    Notes[0].GetComponent<Image>().color = Color.red;
+                    if (!feedBackBool)
+                    {
+                        StartCoroutine(feedBack("Wrong"));
+                        feedBackBool = true;
+                        feedBackCombo = 0;
+                    }
+                }
+            }
+
+            if (Notes[0].position.x > lineGood1.position.x && Notes[0].position.x < lineEarly.position.x)
+            {
+                Debug.Log("Early");
+                if (NotesNames[0] == playedNote)
+                {
+                    Notes[0].GetComponent<Image>().color = Color.yellow;
+                    if (!feedBackBool)
+                    {
+                        feedBackBool = true;
+                        StartCoroutine(feedBack("Early"));
+                        feedBackCombo = 0;
+
+                    }
+                }
+                else if (playedNote != "")
                 {
                     Notes[0].GetComponent<Image>().color = Color.red;
                     if (!feedBackBool)
