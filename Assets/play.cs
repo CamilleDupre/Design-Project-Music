@@ -286,6 +286,7 @@ public class play : MonoBehaviour
                 if (NotesNames[0] == playedNote)
                 {
                     Notes[0].GetComponent<Image>().color = Color.yellow;
+                    Notes[0].transform.Find("line").GetComponent<Image>().color = Color.yellow;
                     if (!feedBackBool)
                     {
                         feedBackBool = true;
@@ -297,6 +298,7 @@ public class play : MonoBehaviour
                 else if (playedNote != "")
                 {
                     Notes[0].GetComponent<Image>().color = Color.red;
+                    Notes[0].transform.Find("line").GetComponent<Image>().color = Color.red;
                     if (!feedBackBool)
                     {
                         StartCoroutine(feedBack("Wrong"));
@@ -311,6 +313,7 @@ public class play : MonoBehaviour
                 if(NotesNames[0] == playedNote)
                 {
                     Notes[0].GetComponent<Image>().color = Color.green;
+                    Notes[0].transform.Find("line").GetComponent<Image>().color = Color.green;
                     if (!feedBackBool)
                     {
                         feedBackBool = true;
@@ -327,6 +330,7 @@ public class play : MonoBehaviour
                 else if(playedNote != "")
                 {
                     Notes[0].GetComponent<Image>().color = Color.red;
+                    Notes[0].transform.Find("line").GetComponent<Image>().color = Color.red;
                     if (!feedBackBool)
                     {
                         StartCoroutine(feedBack("Wrong"));
@@ -342,6 +346,7 @@ public class play : MonoBehaviour
                 if (NotesNames[0] == playedNote)
                 {
                     Notes[0].GetComponent<Image>().color = Color.yellow;
+                    Notes[0].transform.Find("line").GetComponent<Image>().color = Color.yellow;
                     if (!feedBackBool)
                     {
                         feedBackBool = true;
@@ -353,6 +358,7 @@ public class play : MonoBehaviour
                 else if (playedNote != "")
                 {
                     Notes[0].GetComponent<Image>().color = Color.red;
+                    Notes[0].transform.Find("line").GetComponent<Image>().color = Color.red;
                     if (!feedBackBool)
                     {
                         StartCoroutine(feedBack("Wrong"));
